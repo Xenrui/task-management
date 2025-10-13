@@ -6,7 +6,8 @@ const router = express.Router();
 // Get Task
 router.get("/", async (req: Request, res: Response) => {
 	try {
-		const Tasks = await Task.find();
+		const tasks = await Task.find();
+		res.json(tasks);
 	} catch (err) {
 		res.status(500).json({ message: "Internal Server Error" });
 	}
@@ -28,6 +29,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 	try {
 		const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
 		if (!updatedTask) return res.status(404).json({ message: "Task not Found!" });
+		res.json(updatedTask);
 	} catch (err) {
 		res.status(400).json({ message: "Bad Request" });
 	}

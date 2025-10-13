@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-// import taskRoutes from './routes/tasks';
+import taskRoutes from "./routes/task";
 
 dotenv.config();
 
@@ -11,11 +11,14 @@ const port = process.env.port || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/tasks", taskRoutes);
 
+// Database Connection
 mongoose
 	.connect(process.env.MONGO_URI as string)
 	.then(() => console.log("Connected to MongoDB"))
 	.catch((err) => console.log("MongoDB connection error: ", err));
 
-
-app.use
+app.listen(port, () => {
+	console.log(`Server is running on Port ${port}`);
+});
