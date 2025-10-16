@@ -1,4 +1,4 @@
-import { CalendarCheck, LayoutList, Logs } from "lucide-react";
+import { CalendarCheck, LayoutList } from "lucide-react";
 import type { NavItem } from "../types/Navigation";
 
 export const defaultNavItems: NavItem[] = [
