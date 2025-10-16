@@ -1,83 +1,72 @@
-import { CalendarCheck, Logs, Origami, PanelLeft } from "lucide-react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Origami, PanelLeft } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import type { NavigationProps } from "../types/Navigation";
 
-const navItems: {
-	id: string;
-	name: string;
-	path: string;
-	icon: React.ComponentType<{ className?: string }>;
-	description: string;
-}[] = [
-	{
-		id: "task",
-		name: "Task",
-		path: "/task",
-		icon: Logs,
-		description: "list of tasks",
-	},
-	{
-		id: "schedule",
-		name: "Schedule",
-		path: "/schedule",
-		icon: CalendarCheck,
-		description: "time schedules",
-	},
-];
-
-const Navigation: React.FC = () => {
+const Navigation: React.FC<NavigationProps> = ({
+	items,
+	defaultSection = "task",
+	logo,
+	onSectionChange,
+	className = "",
+}) => {
 	const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+	const location = useLocation();
 
 	const getActiveSection = () => {
 		const path = location.pathname.slice(1);
 		const section = path.split("/")[0];
-		const validSection = navItems.map((items) => items.id);
-		return validSection.includes(section) ? section : "task";
+		const validSection = items.map((item) => item.id);
+		return validSection.includes(section) ? section : defaultSection;
 	};
 
 	const activeSection = getActiveSection();
 
+	useEffect(() => {
+		onSectionChange?.(activeSection);
+	}, [activeSection, onSectionChange]);
+
 	return (
-		<div
-			className={`fixed top-0 left-0 z-100 border-r-1 bg-gray-800 text-white transform transition-transform duration-300 min-h-screen  ${
+		<nav
+			className={`h-screen bg-gray-800 text-white transition-all duration-300 ${
 				sideBarOpen ? "w-60" : "w-20"
-			}`}
+			} ${className}`}
 		>
-			{/* Desktop Nav */}
-			<div onClick={() => setSideBarOpen(!sideBarOpen)} className="absolute cursor-pointer m-6 z-50 left-0">
+			<div onClick={() => setSideBarOpen(!sideBarOpen)} className="absolute cursor-pointer hover:bg-gray-700 p-2 m-5 rounded-lg z-50">
 				<PanelLeft className="w-6 h-auto" />
 			</div>
 			<div>
 				{/* Logo */}
 				<div className="flex justify-center my-10">
-					<a href="" className="p-7">
-						<Origami className="w-15 h-auto text-gray-300" />
-					</a>
+					{logo || (
+						<div className="p-7">
+							<Origami className="w-10 h-auto"/>
+						</div>
+					)}
 				</div>
 
 				{/* NavItems */}
-				<div className="text-white px-3">
-					{navItems.map(({ id, name, path, icon, description }) => {
-						const Icon = icon;
+				<div className="text-white px-3 space-y-2">
+					{items.map(({ id, name, path, icon: Icon, description }) => {
 						const isActive = activeSection === id;
 						return (
 							<Link
 								key={id}
 								to={path}
-								className={`flex items-center text-md font-medium gap-1.5 h-full rounded-lg whitespace-nowrap
-									${isActive ? "text-gray bg-blue-500/80" : "text-gray-400"} ${
+								className={`flex items-center text-md font-medium gap-1.5 rounded-lg whitespace-nowrap
+                  ${isActive ? "text-white bg-blue-500/80" : "text-gray-400 hover:text-white hover:bg-gray-700"} ${
 									sideBarOpen ? "px-7 py-4 justify-items-start" : "p-4 justify-center"
 								}`}
-								title={description}
+								title={sideBarOpen ? "" : description}
 							>
-								<Icon className="w-4 h-auto" />
-								{sideBarOpen && <span className=" ">{name}</span>}
+								<Icon className="w-5 h-5" />
+								{sideBarOpen && <span>{name}</span>}
 							</Link>
 						);
 					})}
 				</div>
 			</div>
-		</div>
+		</nav>
 	);
 };
 

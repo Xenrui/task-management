@@ -8,7 +8,6 @@ import { SearchBar } from "../components/tasks/SearchBar";
 import { TaskForm } from "../components/tasks/TaskForm";
 import { TaskList } from "../components/tasks/TaskList";
 import { TaskStats } from "../components/tasks/TaskStats";
-import Navigation from "../components/Navigation";
 
 export default function Task() {
 	const [tasks, setTasks] = useState<Task[]>([]);
@@ -117,9 +116,8 @@ export default function Task() {
 
 	return (
 		<div className="flex">
-			<Navigation />
-			<div className="min-h-screen w-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-				<div className="pl-35 max-w-4xl mx-auto">
+			<div className="min-h-screen w-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+				<div className="max-w-4xl mx-auto">
 					<Header title={header.title} subtitle={header.subtitile} />
 
 					{error && <ErrorMessage message={error} />}
