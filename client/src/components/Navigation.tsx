@@ -1,7 +1,6 @@
-import { Ban, Logs } from "lucide-react";
-import React from "react";
+import { CalendarCheck, Logs, Origami, PanelLeft } from "lucide-react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { cn } from "../utils/cn";
 
 const navItems: {
 	id: string;
@@ -18,15 +17,17 @@ const navItems: {
 		description: "list of tasks",
 	},
 	{
-		id: "try",
-		name: "Try",
-		path: "/task",
-		icon: Logs,
-		description: "list of trys",
+		id: "schedule",
+		name: "Schedule",
+		path: "/schedule",
+		icon: CalendarCheck,
+		description: "time schedules",
 	},
 ];
 
 const Navigation: React.FC = () => {
+	const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+
 	const getActiveSection = () => {
 		const path = location.pathname.slice(1);
 		const section = path.split("/")[0];
@@ -37,18 +38,25 @@ const Navigation: React.FC = () => {
 	const activeSection = getActiveSection();
 
 	return (
-		<div className="w-30 border-r-1 border-gray-300/50">
+		<div
+			className={`fixed top-0 left-0 z-100 border-r-1 bg-gray-800 text-white transform transition-transform duration-300 min-h-screen  ${
+				sideBarOpen ? "w-60" : "w-20"
+			}`}
+		>
 			{/* Desktop Nav */}
+			<div onClick={() => setSideBarOpen(!sideBarOpen)} className="absolute cursor-pointer m-6 z-50 left-0">
+				<PanelLeft className="w-6 h-auto" />
+			</div>
 			<div>
 				{/* Logo */}
-				<div className="flex justify-center mb-5">
+				<div className="flex justify-center my-10">
 					<a href="" className="p-7">
-						<Ban className="w-15 h-auto" />
+						<Origami className="w-15 h-auto text-gray-300" />
 					</a>
 				</div>
 
 				{/* NavItems */}
-				<div className="">
+				<div className="text-white px-3">
 					{navItems.map(({ id, name, path, icon, description }) => {
 						const Icon = icon;
 						const isActive = activeSection === id;
@@ -56,13 +64,14 @@ const Navigation: React.FC = () => {
 							<Link
 								key={id}
 								to={path}
-								className={cn(
-									"flex justify-center items-center text-md font-medium gap-1.5 h-full px-5 py-2 rounded-lg whitespace-nowrap",
-									isActive ? "text-black bg-gray-100/80" : "text-gray-600"
-								)}
+								className={`flex items-center text-md font-medium gap-1.5 h-full rounded-lg whitespace-nowrap
+									${isActive ? "text-gray bg-blue-500/80" : "text-gray-400"} ${
+									sideBarOpen ? "px-7 py-4 justify-items-start" : "p-4 justify-center"
+								}`}
 								title={description}
 							>
-								<span className=" ">{name}</span>
+								<Icon className="w-4 h-auto" />
+								{sideBarOpen && <span className=" ">{name}</span>}
 							</Link>
 						);
 					})}
