@@ -1,6 +1,7 @@
 import type { NewTask, Task } from "../types/Task";
+import { config } from "../config/env";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = `${config.apiUrl}/tasks`;
 
 export const taskApi = {
 	getTasks: async (): Promise<Task[]> => {
@@ -17,7 +18,7 @@ export const taskApi = {
 		});
 
 		if (!response.ok) throw new Error("Failed to create task");
-        return response.json();
+		return response.json();
 	},
 
 	updateTask: async (id: string, task: Partial<Task>): Promise<Task> => {

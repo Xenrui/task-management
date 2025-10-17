@@ -1,4 +1,8 @@
+# Environment variables
 .env
+
+# Keep template files
+!.env.example
 
 # Logs
 logs
