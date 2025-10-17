@@ -20,9 +20,8 @@ export default function Task() {
 
 	const header = {
 		title: "Task Manager",
-		subtitile: 'Stay organized and productive'
+		subtitile: "Stay organized and productive",
 	};
-
 
 	useEffect(() => {
 		loadTasks();
@@ -131,8 +130,11 @@ export default function Task() {
 
 					{!showForm && (
 						<button
-							onClick={() => setShowForm(true)}
-							className="w-full bg-blue-500 cursor-pointer hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg mb-6 flex items-center justify-center gap-2 transition"
+							onClick={() => setShowForm(true)} //
+							className={`w-full ${
+								error != null ? "bg-blue-300" : "bg-blue-500 hover:bg-blue-600"
+							} cursor-pointer text-white font-semibold py-3 rounded-lg shadow-lg mb-6 flex items-center justify-center gap-2 transition`}
+							disabled={error != null} //false
 						>
 							<Plus size={20} />
 							Add New Task
