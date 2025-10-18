@@ -35,15 +35,6 @@ export default function Task() {
 			setTasks(data);
 		} catch (err) {
 			setError("Failed to load tasks. Make sure your backend is running on http://localhost:5000");
-			setTasks([
-				{
-					_id: "1",
-					title: "Build backend API",
-					description: "Create Express server with MongoDB",
-					completed: false,
-					createdAt: new Date().toISOString(),
-				},
-			]);
 		} finally {
 			setLoading(false);
 		}

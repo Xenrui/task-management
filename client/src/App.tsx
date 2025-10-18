@@ -10,9 +10,7 @@ const App = () => {
 			<Layout
 				navItems={defaultNavItems}
 				defaultSection="task"
-				onSectionChange={(section) => {
-					console.log("Current section:", section);
-				}}
+				
 			>
 				<Routes>
 					<Route path="/" element={<Navigate to={"/task"} />} />
