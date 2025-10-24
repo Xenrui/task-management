@@ -29,7 +29,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete, onEd
 					>
 						{task.title}
 					</h3>
-					{task.description && <p className="text-gray-600 mt-1">{task.description}</p>}
+					{task.description && <p className="text-gray-600 mt-1 truncate">{task.description}</p>}
 					{task.deadline && (
 						<p className="text-sm text-gray-500 mt-2">
 							Due: {new Date(task.deadline).toLocaleDateString()}
