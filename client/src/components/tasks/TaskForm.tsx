@@ -33,7 +33,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onSubmit, onCan
 	};
 
 	return (
-		<div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+		<div className={`rounded-lg shadow-lg p-6 mb-6 bg-white ${editingTask ? /*'fixed z-100 flex justify-self'*/ '': ''}`}>
 			<h2 className="text-xl font-bold text-gray-800 mb-4">{editingTask ? "Edit Task" : "New Task"}</h2>
 			<div>
 				<div className="mb-4">
