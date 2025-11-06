@@ -35,6 +35,7 @@ export default function Task() {
 			setTasks(data);
 		} catch (err) {
 			setError("Failed to load tasks. Make sure your backend is running on http://localhost:5000");
+			console.log(err);
 		} finally {
 			setLoading(false);
 		}
@@ -53,6 +54,7 @@ export default function Task() {
 			setShowForm(false);
 		} catch (err) {
 			setError("Failed to save task");
+			console.log(err);
 		}
 	};
 
@@ -62,6 +64,7 @@ export default function Task() {
 			setTasks(tasks.map((t) => (t._id === updated._id ? updated : t)));
 		} catch (err) {
 			setError("Failed to update task");
+			console.log(err);
 		}
 	};
 
@@ -71,6 +74,7 @@ export default function Task() {
 			setTasks(tasks.filter((t) => t._id !== id));
 		} catch (err) {
 			setError("Failed to delete task");
+			console.log(err);
 		}
 	};
 
